@@ -22,9 +22,11 @@ defmodule Inventory.QrCode do
   end
 
   def new_struct_from_binary(attrs) do
+    {:ok, image} = attrs |> QrGen.create_qr_image()
+
     %__MODULE__{
       qr_data: attrs,
-      qr_img: attrs |> QrGen.create_qr_image()
+      qr_img: image
     }
   end
 end

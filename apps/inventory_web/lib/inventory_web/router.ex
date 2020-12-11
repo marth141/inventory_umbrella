@@ -71,6 +71,7 @@ defmodule InventoryWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     live "/products", ProductsLive, :index
+    live "/qr_codes", QrCodesLive, :index
   end
 
   scope "/", InventoryWeb do

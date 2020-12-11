@@ -15,18 +15,27 @@ defmodule Inventory do
     %{minimum: minimum, maximum: maximum} = Enum.into(opts, @defaults)
 
     assets =
-      Enum.map(minimum..maximum, fn n ->
+      Enum.map(minimum..maximum, fn _n ->
         Inventory.Asset.new_struct_from_map(%{
           name: label,
-          qr_code:
-            Inventory.QrCode.new_struct_from_binary(label <> n) |> Inventory.QrCodes.create(),
           description: description,
           amount: maximum
         })
+        |> Inventory.Repo.preload(:qr_codes)
       end)
+      |> Enum.map(fn asset ->
+        qr_code =
+          Inventory.QrCode.new_struct_from_binary(asset.name <> to_string(asset.id))
+          |> Inventory.QrCodes.create()
+
+        Inventory.Asset.changeset(asset, %{
+          qr_code: qr_code
+        })
+      end)
+      |> IO.inspect()
 
     for asset <- assets do
-      Inventory.Assets.create(asset)
+      Inventory.Assets.create(asset.data)
     end
   end
 
