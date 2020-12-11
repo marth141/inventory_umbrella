@@ -72,6 +72,13 @@ defmodule InventoryWeb.Router do
 
     live "/assets", AssetsLive, :index
     live "/qr_codes", QrCodesLive, :index
+
+    live "/users", UserLive.Index, :index
+    live "/users/new", UserLive.Index, :new
+    live "/users/:id/edit", UserLive.Index, :edit
+
+    live "/users/:id", UserLive.Show, :show
+    live "/users/:id/show/edit", UserLive.Show, :edit
   end
 
   scope "/", InventoryWeb do
