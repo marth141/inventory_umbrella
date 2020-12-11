@@ -21,12 +21,13 @@ defmodule InventoryWeb.QrCodesLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <%= live_component @socket, InventoryWeb.TableComponent,
+    <%= live_component @socket, InventoryWeb.QrCodeTableComponent,
       table_dataset: Inventory.QrCodes.read(),
       table_headers:
         Map.keys(%Inventory.QrCode{})
           |> List.delete(:__meta__)
-          |> List.delete(:__struct__) %>
+          |> List.delete(:__struct__)
+          |> List.delete(:asset) %>
     """
   end
 end

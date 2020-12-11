@@ -1,4 +1,4 @@
-defmodule InventoryWeb.ProductsLive do
+defmodule InventoryWeb.AssetsLive do
   use InventoryWeb, :live_view
 
   @impl true
@@ -15,7 +15,7 @@ defmodule InventoryWeb.ProductsLive do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Products")
+    |> assign(:page_title, "Assets")
   end
 
   @impl true
@@ -27,7 +27,7 @@ defmodule InventoryWeb.ProductsLive do
         Map.keys(%Inventory.Asset{})
           |> List.delete(:__meta__)
           |> List.delete(:__struct__)
-          |> List.delete(:qr_codes) %>
+          |> List.delete(:qr_code) %>
     """
   end
 end
