@@ -7,41 +7,25 @@ defmodule Inventory do
   if it comes from the database, an external API or others.
   """
 
-  @defaults %{minimum: 1, maximum: 1}
+  import Ecto.Changeset
 
-  def create_inventory_for(opts \\ []) do
-    label = Keyword.get(opts, :label)
-    description = Keyword.get(opts, :description)
-    %{minimum: minimum, maximum: maximum} = Enum.into(opts, @defaults)
-
-    assets =
-      Enum.map(minimum..maximum, fn _n ->
-        Inventory.Asset.new_struct_from_map(%{
-          name: label,
-          description: description,
-          amount: maximum
-        })
-        |> Inventory.Repo.preload(:qr_codes)
-      end)
-      |> Enum.map(fn asset ->
-        qr_code =
-          Inventory.QrCode.new_struct_from_binary(asset.name <> to_string(asset.id))
-          |> Inventory.QrCodes.create()
-
-        Inventory.Asset.changeset(asset, %{
-          qr_code: qr_code
-        })
-      end)
-      |> IO.inspect()
-
-    for asset <- assets do
-      Inventory.Assets.create(asset.data)
-    end
+  def create_inventory_for(label, description, minimum \\ 1, maximum \\ 1) do
+    Enum.map(minimum..maximum, fn _n ->
+      %{
+        name: label,
+        description: description,
+        amount: maximum
+      }
+    end)
+    |> Enum.map(fn map ->
+      Inventory.Asset.new_struct_from_map(map)
+      |> Inventory.Asset.changeset()
+      |> put_assoc(:qr_code, [Inventory.QrCode.new_struct_from_binary(map.name)])
+    end)
+    |> Enum.map(fn asset -> Inventory.Repo.insert(asset) end)
   end
 
   def test() do
-    for x <- 1..5, y <- 6..10 do
-      {x, y}
-    end
+    Inventory.create_inventory_for("Lappy", "Strongbad's computer")
   end
 end

@@ -6,16 +6,11 @@ defmodule Inventory.Repo.Migrations.CreateQrCodes do
       add :qr_img, :binary
       add :qr_data, :string
 
-      add :asset, references(:assets)
-
       timestamps()
+
+      add :asset_id, references(:assets, on_delete: :nothing)
     end
 
-    create unique_index(:qr_codes, [:qr_img])
-    create unique_index(:qr_codes, [:qr_data])
-
-    alter table(:assets) do
-      add :qr_code, references(:qr_codes)
-    end
+    create index(:qr_codes, :asset_id)
   end
 end

@@ -5,12 +5,12 @@ defmodule Inventory.QrCode do
   alias Inventory.Asset
 
   schema "qr_codes" do
-    belongs_to(:asset, Asset)
-
     field :qr_img, :binary
     field :qr_data, :string
 
     timestamps()
+
+    belongs_to(:asset, Asset)
   end
 
   @doc false
@@ -18,7 +18,7 @@ defmodule Inventory.QrCode do
     qr_code
     |> cast(attrs, [:qr_data, :qr_img])
     |> validate_required([:qr_data, :qr_img])
-    |> unique_constraint([:qr_data, :qr_img])
+    |> unique_constraint(:asset_id)
   end
 
   def new_struct_from_binary(attrs) do

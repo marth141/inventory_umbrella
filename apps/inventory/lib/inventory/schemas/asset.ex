@@ -12,9 +12,9 @@ defmodule Inventory.Asset do
     field :manufacturer, :string
     field :amount, :decimal
 
-    has_many(:qr_codes, QrCode)
-
     timestamps()
+
+    has_many(:qr_code, QrCode)
   end
 
   @doc false
