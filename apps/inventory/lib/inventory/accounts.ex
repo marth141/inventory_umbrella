@@ -222,6 +222,7 @@ defmodule Inventory.Accounts do
     token
   end
 
+  @spec get_user_by_session_token(any) :: any
   @doc """
   Gets the user with the given signed token.
   """

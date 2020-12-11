@@ -7,11 +7,26 @@ defmodule Inventory do
   if it comes from the database, an external API or others.
   """
 
-  def create_inventory_for do
-    {:ok, labels} = QrGen.create_labels_for("LAPTOP-0", 1, 100)
+  @defaults %{minimum: 1, maximum: 1}
 
-    for label <- labels do
-      Inventory.Asset.create(label)
+  def create_inventory_for(opts \\ []) do
+    label = Keyword.get(opts, :label)
+    description = Keyword.get(opts, :description)
+    %{minimum: minimum, maximum: maximum} = Enum.into(opts, @defaults)
+
+    assets =
+      Enum.map(minimum..maximum, fn n ->
+        Inventory.Asset.new_struct_from_map(%{
+          name: label,
+          qr_code:
+            Inventory.QrCode.new_struct_from_binary(label <> n) |> Inventory.QrCodes.create(),
+          description: description,
+          amount: maximum
+        })
+      end)
+
+    for asset <- assets do
+      Inventory.Assets.create(asset)
     end
   end
 end

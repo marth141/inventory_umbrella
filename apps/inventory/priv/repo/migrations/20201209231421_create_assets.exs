@@ -3,13 +3,14 @@ defmodule Inventory.Repo.Migrations.CreateAssets do
 
   def change do
     create table(:assets) do
-      add :qr_img, :binary
-      add :qr_data, :string
+      add :name, :string
+      add :description, :string
+      add :serial_number, :string
+      add :model_number, :string
+      add :manufacturer, :string
+      add :amount, :decimal
 
       timestamps()
     end
-
-    create unique_index(:assets, [:qr_img])
-
   end
 end

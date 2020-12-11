@@ -68,6 +68,12 @@ defmodule InventoryWeb.Router do
   end
 
   scope "/", InventoryWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live "/products", ProductsLive, :index
+  end
+
+  scope "/", InventoryWeb do
     pipe_through [:browser]
 
     delete "/users/log_out", UserSessionController, :delete
