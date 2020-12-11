@@ -18,8 +18,8 @@ defmodule Inventory do
       }
     end)
     |> Enum.map(fn map ->
-      Inventory.Asset.new_struct_from_map(map)
-      |> Inventory.Asset.changeset()
+      Inventory.Assets.Asset.new_struct_from_map(map)
+      |> Inventory.Assets.Asset.changeset()
       |> put_assoc(:qr_code, [Inventory.QrCodes.QrCode.new_struct_from_binary(map.name)])
     end)
     |> Enum.map(fn asset -> Inventory.Repo.insert(asset) end)

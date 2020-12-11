@@ -2,7 +2,7 @@ defmodule Inventory.QrCodes.QrCode do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Inventory.Asset
+  alias Inventory.Assets.Asset
 
   schema "qr_codes" do
     field :qr_img, :binary

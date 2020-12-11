@@ -70,7 +70,12 @@ defmodule InventoryWeb.Router do
   scope "/", InventoryWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    live "/assets", AssetsLive, :index
+    live "/assets", AssetLive.Index, :index
+    live "/assets/new", AssetLive.Index, :new
+    live "/assets/:id/edit", AssetLive.Index, :edit
+
+    live "/assets/:id", AssetLive.Show, :show
+    live "/assets/:id/show/edit", AssetLive.Show, :edit
 
     live "/qr_codes", QrCodeLive.Index, :index
     live "/qr_codes/new", QrCodeLive.Index, :new

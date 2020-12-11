@@ -1,4 +1,4 @@
-defmodule Inventory.Asset do
+defmodule Inventory.Assets.Asset do
   use Ecto.Schema
   import Ecto.Changeset
 
