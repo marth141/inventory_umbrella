@@ -6,7 +6,7 @@ defmodule InventoryWeb.TableHeadComponent do
     ~L"""
     <thead>
       <tr>
-        <%= for header <- @headers do %>
+        <%= for header <- @table_headers do %>
           <th><%= header %></th>
         <% end %>
       </tr>

@@ -7,8 +7,8 @@ defmodule InventoryWeb.ProductsLive do
   def mount(_params, session, socket) do
     {:ok,
      socket
-     |> assign(:products, fetch_assets())
-     |> assign(:headers, Map.keys(%Inventory.Asset{}))
+     |> assign(:table_dataset, fetch_assets())
+     |> assign(:table_headers, Map.keys(%Inventory.Asset{}))
      |> assign_current_user(session)}
   end
 
@@ -19,7 +19,7 @@ defmodule InventoryWeb.ProductsLive do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "DM Panel")
+    |> assign(:page_title, "Products")
   end
 
   defp fetch_assets() do

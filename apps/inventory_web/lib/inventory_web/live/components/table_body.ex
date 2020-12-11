@@ -6,8 +6,8 @@ defmodule InventoryWeb.TableBodyComponent do
     ~L"""
     <tbody>
       <tr>
-        <%= for data <- @dataset do %>
-          <%= for header <- @headers do %>
+        <%= for data <- @table_dataset do %>
+          <%= for header <- @table_headers do %>
             <td><%= data[header] %></td>
           <% end %>
         <% end %>
