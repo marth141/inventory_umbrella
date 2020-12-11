@@ -5,14 +5,6 @@ defmodule InventoryWeb.ProductsLive do
   def mount(_params, session, socket) do
     {:ok,
      socket
-     |> assign(:table_dataset, Inventory.Assets.read())
-     |> assign(
-       :table_headers,
-       Map.keys(%Inventory.Asset{})
-       |> List.delete(:__meta__)
-       |> List.delete(:__struct__)
-       |> List.delete(:qr_codes)
-     )
      |> assign_current_user(session)}
   end
 
@@ -29,7 +21,13 @@ defmodule InventoryWeb.ProductsLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <%= live_component @socket, InventoryWeb.TableComponent, assigns %>
+    <%= live_component @socket, InventoryWeb.TableComponent,
+      table_dataset: Inventory.Assets.read(),
+      table_headers:
+        Map.keys(%Inventory.Asset{})
+          |> List.delete(:__meta__)
+          |> List.delete(:__struct__)
+          |> List.delete(:qr_codes) %>
     """
   end
 end
