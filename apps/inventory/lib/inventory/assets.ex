@@ -4,8 +4,8 @@ defmodule Inventory.Assets do
 
   # CRUD
   def create(%Asset{} = attrs) do
-    %Asset{}
-    |> Asset.changeset(Map.from_struct(attrs))
+    attrs
+    |> Asset.changeset()
     |> Repo.insert!()
   end
 

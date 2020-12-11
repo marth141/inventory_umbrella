@@ -4,8 +4,8 @@ defmodule Inventory.QrCodes do
 
   # CRUD
   def create(%QrCode{} = attrs) do
-    %QrCode{}
-    |> QrCode.changeset(Map.from_struct(attrs))
+    attrs
+    |> QrCode.changeset()
     |> Repo.insert!()
   end
 
