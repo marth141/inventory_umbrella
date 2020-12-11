@@ -1,4 +1,4 @@
-defmodule Inventory.QrCode do
+defmodule Inventory.QrCodes.QrCode do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -2,7 +2,7 @@ defmodule Inventory.Asset do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Inventory.QrCode
+  alias Inventory.QrCodes.QrCode
 
   schema "assets" do
     field :name, :string
