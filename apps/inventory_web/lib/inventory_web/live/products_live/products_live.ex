@@ -1,14 +1,18 @@
 defmodule InventoryWeb.ProductsLive do
   use InventoryWeb, :live_view
-  import Ecto.Query
-  alias Inventory.Repo
 
   @impl true
   def mount(_params, session, socket) do
     {:ok,
      socket
-     |> assign(:table_dataset, fetch_assets())
-     |> assign(:table_headers, Map.keys(%Inventory.Asset{}))
+     |> assign(:table_dataset, Inventory.Assets.read())
+     |> assign(
+       :table_headers,
+       Map.keys(%Inventory.Asset{})
+       |> List.delete(:__meta__)
+       |> List.delete(:__struct__)
+       |> List.delete(:qr_codes)
+     )
      |> assign_current_user(session)}
   end
 
@@ -20,12 +24,6 @@ defmodule InventoryWeb.ProductsLive do
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Products")
-  end
-
-  defp fetch_assets() do
-    from(a in Inventory.Asset, as: :asset)
-    |> order_by([asset: a], desc: a.name)
-    |> Repo.all()
   end
 
   @impl true

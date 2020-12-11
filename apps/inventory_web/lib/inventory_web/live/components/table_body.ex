@@ -5,13 +5,13 @@ defmodule InventoryWeb.TableBodyComponent do
   def render(assigns) do
     ~L"""
     <tbody>
-      <tr>
-        <%= for data <- @table_dataset do %>
+      <%= for data <- @table_dataset do %>
+        <tr>
           <%= for header <- @table_headers do %>
-            <td><%= data[header] %></td>
+            <td><%= Map.get(data, header) %></td>
           <% end %>
-        <% end %>
-      </tr>
+        </tr>
+      <% end %>
     </tbody>
     """
   end

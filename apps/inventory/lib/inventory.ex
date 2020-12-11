@@ -29,4 +29,10 @@ defmodule Inventory do
       Inventory.Assets.create(asset)
     end
   end
+
+  def test() do
+    for x <- 1..5, y <- 6..10 do
+      {x, y}
+    end
+  end
 end
