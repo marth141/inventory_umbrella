@@ -60,7 +60,8 @@ defmodule InventoryWeb.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "cmd npm install --prefix assets"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      reset_db: ["cmd mix ecto.drop && mix ecto.create && mix ecto.migrate"]
     ]
   end
 end

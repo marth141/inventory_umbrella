@@ -34,8 +34,6 @@ defmodule Inventory.QrCodes do
     |> Repo.delete!()
   end
 
-  alias Inventory.QrCodes.QrCode
-
   @doc """
   Returns the list of qr_codes.
 
