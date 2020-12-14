@@ -1,4 +1,5 @@
 defmodule Inventory.Assets do
+  import Ecto.Changeset
   alias Inventory.Repo
   alias Inventory.Assets.Asset
 
