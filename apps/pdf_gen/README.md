@@ -2,6 +2,14 @@
 
 **TODO: Add description**
 
+## Building
+
+Pre-Requisite: Elixir installed
+
+1. After cloning the repository, run `mix deps.get`
+2. Run `sudo apt-get install wkhtmltopdf`
+3. Not proper, but use `iex -S mix` to run it
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
