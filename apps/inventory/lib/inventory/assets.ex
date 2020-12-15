@@ -77,12 +77,11 @@ defmodule Inventory.Assets do
 
   """
   def create_asset(attrs \\ %{}) do
-    %Asset{}
-    |> Asset.changeset(attrs)
-    |> put_assoc(:qr_code, [
-      Inventory.QrCodes.QrCode.new_struct_from_binary(attrs["name"])
-    ])
-    |> Repo.insert()
+    with qr_code <- Inventory.QrCodes.new_from_binary(attrs["name"]) do
+      %Asset{}
+      |> Asset.changeset(attrs |> Map.put("qr_code", qr_code))
+      |> Repo.insert()
+    end
   end
 
   @doc """
