@@ -1,38 +1,15 @@
 defmodule Inventory.Assets do
-  import Ecto.Changeset
   alias Inventory.Repo
   alias Inventory.Assets.Asset
 
-  # CRUD
-  def create(%Asset{} = attrs) do
-    attrs
+  def new_from_map(%{name: name, description: description, amount: amount} = _attrs) do
+    %Asset{
+      name: name,
+      description: description,
+      amount: amount,
+      qr_img: QrGen.create_qr_image!(name)
+    }
     |> Asset.changeset()
-    |> Repo.insert!()
-  end
-
-  def create(%{} = attrs) do
-    %Asset{}
-    |> Asset.changeset(attrs)
-    |> Repo.insert!()
-  end
-
-  def read() do
-    Repo.all(Asset)
-  end
-
-  def read(query) do
-    Repo.get_by(Asset, query)
-  end
-
-  def update(%Asset{} = original, attrs) do
-    original
-    |> Asset.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def delete(%Asset{} = to_delete) do
-    to_delete
-    |> Repo.delete!()
   end
 
   @doc """
@@ -77,11 +54,12 @@ defmodule Inventory.Assets do
 
   """
   def create_asset(attrs \\ %{}) do
-    with qr_code <- Inventory.QrCodes.new_from_binary(attrs["name"]) do
-      %Asset{}
-      |> Asset.changeset(attrs |> Map.put("qr_code", qr_code))
-      |> Repo.insert()
-    end
+    image = QrGen.create_qr_image!(attrs["name"])
+    new_attrs = Map.put_new(attrs, "qr_img", image)
+
+    %Asset{}
+    |> Asset.changeset(new_attrs)
+    |> Repo.insert()
   end
 
   @doc """
@@ -97,9 +75,11 @@ defmodule Inventory.Assets do
 
   """
   def update_asset(%Asset{} = asset, attrs) do
-    asset
-    |> Asset.changeset(attrs)
-    |> Repo.update()
+    with {:ok, image} <- QrGen.create_qr_image(attrs["name"]) do
+      asset
+      |> Asset.changeset(Map.put(attrs, "qr_img", image))
+      |> Repo.update()
+    end
   end
 
   @doc """

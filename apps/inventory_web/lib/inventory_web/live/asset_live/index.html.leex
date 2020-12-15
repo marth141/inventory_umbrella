@@ -1,5 +1,4 @@
 <h1>Listing Assets</h1>
-
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, InventoryWeb.AssetLive.FormComponent,
     id: @asset.id || :new,
@@ -8,7 +7,6 @@
     asset: @asset,
     return_to: Routes.asset_index_path(@socket, :index) %>
 <% end %>
-
 <table>
   <thead>
     <tr>
@@ -18,7 +16,7 @@
       <th>Model number</th>
       <th>Manufacturer</th>
       <th>Amount</th>
-
+      <th>QR Image</th>
       <th></th>
     </tr>
   </thead>
@@ -31,15 +29,17 @@
         <td><%= asset.model_number %></td>
         <td><%= asset.manufacturer %></td>
         <td><%= asset.amount %></td>
-
+        <td><%= Phoenix.HTML.raw(
+                "<img src=data:image/png;base64," <> Base.encode64(asset.qr_img) <> " alt=\"Red Dot\"/>"
+              ) %></td>
         <td>
-          <span><%= live_redirect "Show", to: Routes.asset_show_path(@socket, :show, asset) %></span>
-          <span><%= live_patch "Edit", to: Routes.asset_index_path(@socket, :edit, asset) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: asset.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<span><%= live_patch "New Asset", to: Routes.asset_index_path(@socket, :new) %></span>
+          <td>
+            <span><%= live_redirect "Show", to: Routes.asset_show_path(@socket, :show, asset) %></span>
+            <span><%= live_patch "Edit", to: Routes.asset_index_path(@socket, :edit, asset) %></span>
+            <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: asset.id, data: [confirm: "Are you sure?"] %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <span><%= live_patch "New Asset", to: Routes.asset_index_path(@socket, :new) %></span>

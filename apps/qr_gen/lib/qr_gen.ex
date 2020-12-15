@@ -38,7 +38,7 @@ defmodule QrGen do
   ## Examples
 
       iex> QrGen.create_qr_image("Test-1")
-      {:ok, results}
+      {:ok, image}
 
   """
   def create_qr_image(data) do
@@ -46,5 +46,21 @@ defmodule QrGen do
      data
      |> EQRCode.encode()
      |> EQRCode.png()}
+  end
+
+  @spec create_qr_image!(binary) :: binary
+  @doc """
+  Creates image for a given binary.
+
+  ## Examples
+
+      iex> QrGen.create_qr_image("Test-1")
+      image
+
+  """
+  def create_qr_image!(data) do
+    data
+    |> EQRCode.encode()
+    |> EQRCode.png()
   end
 end

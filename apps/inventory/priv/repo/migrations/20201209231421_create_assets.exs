@@ -9,6 +9,7 @@ defmodule Inventory.Repo.Migrations.CreateAssets do
       add :model_number, :string
       add :manufacturer, :string
       add :amount, :decimal
+      add :qr_img, :binary
 
       timestamps()
     end
