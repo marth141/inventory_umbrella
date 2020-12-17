@@ -1,6 +1,5 @@
 const QrReader = {
   mounted() {
-    var resultContainer = document.getElementById("qr-reader-results");
     var lastResult,
       countResults = 0;
 
@@ -10,10 +9,7 @@ const QrReader = {
       if (qrCodeMessage !== lastResult) {
         ++countResults;
         lastResult = qrCodeMessage;
-        resultContainer.innerHTML += `<div>[${countResults}] - ${qrCodeMessage}</div>`;
-        self.pushEvent("jsEventToPhx", { foo: qrCodeMessage }, (reply, ref) =>
-          console.log(reply)
-        );
+        self.pushEvent("jsEventToPhx", { qrCodeMessage });
       }
     }
 
@@ -22,8 +18,6 @@ const QrReader = {
       qrbox: 250,
     });
     html5QrcodeScanner.render(onScanSuccess);
-
-    console.log("mounted!");
   },
 };
 
