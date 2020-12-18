@@ -2,6 +2,10 @@ defmodule Inventory.Assets do
   alias Inventory.Repo
   alias Inventory.Assets.Asset
 
+  def topic(), do: inspect(__MODULE__)
+
+  def subscribe, do: Messaging.subscribe(topic())
+
   def new_from_map(%{name: name, description: description, amount: amount} = _attrs) do
     %Asset{
       name: name,

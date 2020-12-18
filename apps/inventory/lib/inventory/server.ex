@@ -12,7 +12,7 @@ defmodule Inventory.Server do
   end
 
   def init(_opts) do
-    Messaging.subscribe(Inventory.topic())
+    Messaging.subscribe(Inventory.Assets.topic())
     {:ok, %{last_refresh: nil}, {:continue, :init}}
   end
 
