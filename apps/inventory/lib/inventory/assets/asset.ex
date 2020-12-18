@@ -9,6 +9,8 @@ defmodule Inventory.Assets.Asset do
     manufacturer
     amount
     qr_img
+    check_in_date
+    check_out_date
   )a
 
   schema "assets" do
@@ -19,6 +21,8 @@ defmodule Inventory.Assets.Asset do
     field :manufacturer, :string
     field :amount, :decimal
     field :qr_img, :binary
+    field :check_in_date, :utc_datetime
+    field :check_out_date, :utc_datetime
 
     timestamps()
   end

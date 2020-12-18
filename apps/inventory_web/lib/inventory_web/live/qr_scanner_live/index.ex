@@ -3,7 +3,9 @@ defmodule InventoryWeb.QrScannerLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket |> assign(:scan, "Need QR")}
+    if connected?(socket), do: Inventory.subscribe()
+
+    {:ok, socket |> assign(:qr_code_message, "")}
   end
 
   @impl true
@@ -17,7 +19,13 @@ defmodule InventoryWeb.QrScannerLive.Index do
   end
 
   @impl true
-  def handle_event("jsEventToPhx", params, socket) do
-    {:noreply, assign(socket, :scan, "Scan: " <> params["qrCodeMessage"])}
+  def handle_info(_, socket) do
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("qrCodeMessage", params, socket) do
+    Messaging.publish({:qr_code_scanned, params["qrCodeMessage"]}, Inventory.topic())
+    {:noreply, assign(socket, :qr_code_message, "Scanned: " <> params["qrCodeMessage"])}
   end
 end

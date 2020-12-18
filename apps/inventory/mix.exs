@@ -41,7 +41,8 @@ defmodule Inventory.MixProject do
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.0"},
-      {:qr_gen, in_umbrella: true}
+      {:qr_gen, in_umbrella: true},
+      {:messaging, in_umbrella: true}
     ]
   end
 

@@ -3,13 +3,13 @@ const QrReader = {
     var lastResult,
       countResults = 0;
 
-    var self = this;
+    var hook = this;
 
     function onScanSuccess(qrCodeMessage) {
       if (qrCodeMessage !== lastResult) {
         ++countResults;
         lastResult = qrCodeMessage;
-        self.pushEvent("jsEventToPhx", { qrCodeMessage });
+        hook.pushEvent("qrCodeMessage", { qrCodeMessage });
       }
     }
 

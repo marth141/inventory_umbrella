@@ -10,9 +10,10 @@ defmodule Inventory.Application do
       # Start the Ecto repository
       Inventory.Repo,
       # Start the PubSub system
-      {Phoenix.PubSub, name: Inventory.PubSub}
+      {Phoenix.PubSub, name: Inventory.PubSub},
       # Start a worker by calling: Inventory.Worker.start_link(arg)
       # {Inventory.Worker, arg}
+      {Inventory.Server, []}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Inventory.Supervisor)

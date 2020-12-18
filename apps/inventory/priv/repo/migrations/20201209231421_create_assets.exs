@@ -10,6 +10,8 @@ defmodule Inventory.Repo.Migrations.CreateAssets do
       add :manufacturer, :string
       add :amount, :decimal
       add :qr_img, :binary
+      add :check_in_date, :utc_datetime
+      add :check_out_date, :utc_datetime
 
       timestamps()
     end

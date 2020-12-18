@@ -7,6 +7,10 @@ defmodule Inventory do
   if it comes from the database, an external API or others.
   """
 
+  def topic(), do: inspect(__MODULE__)
+
+  def subscribe, do: Messaging.subscribe(topic())
+
   def create_inventory_for(label, description, minimum \\ 1, maximum \\ 1) do
     inventory =
       Enum.map(minimum..maximum, fn _n ->
