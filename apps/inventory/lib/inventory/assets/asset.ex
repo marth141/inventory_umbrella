@@ -6,6 +6,7 @@ defmodule Inventory.Assets.Asset do
     name
     description
     serial_number
+    model_number
     manufacturer
     amount
     qr_img
