@@ -6,7 +6,7 @@ defmodule Inventory.Assets do
 
   def subscribe, do: Messaging.subscribe(topic())
 
-  def new_from_map(%{name: name, description: description, amount: amount} = _attrs) do
+  def new_asset_from_map(%{name: name, description: description, amount: amount} = _attrs) do
     %Asset{
       name: name,
       description: description,
