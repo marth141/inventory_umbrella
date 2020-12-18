@@ -17,7 +17,7 @@ defmodule Inventory do
         }
       end)
       |> Enum.map(fn map ->
-        Inventory.Assets.new_from_map(map)
+        Inventory.Assets.new_asset_from_map(map)
       end)
 
     Inventory.Repo.insert_all(Inventory.Assets.Asset, inventory)
