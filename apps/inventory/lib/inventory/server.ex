@@ -19,7 +19,7 @@ defmodule Inventory.Server do
   def handle_info({:retrieve_asset, msg}, state) do
     Messaging.publish(
       {:asset_retrieved, Inventory.Repo.get_by(Inventory.Assets.Asset, name: msg)},
-      Inventory.topic()
+      Inventory.Assets.topic()
     )
 
     {:noreply, state}
