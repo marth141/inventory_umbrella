@@ -1,5 +1,42 @@
 <div phx-hook="QrReader" phx-update="ignore" id="qr-reader" style="width:500px"></div>
 <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-<h1><%= @qr_code_message %></h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Serial number</th>
+      <th>Model number</th>
+      <th>Manufacturer</th>
+      <th>Amount</th>
+      <th>Check In Date</th>
+      <th>Check Out Date</th>
+      <th>QR Image</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="assets">
+    <%= for asset <- @assets do %>
+      <tr id="asset-<%= asset.id %>">
+        <td><%= asset.name %></td>
+        <td><%= asset.description %></td>
+        <td><%= asset.serial_number %></td>
+        <td><%= asset.model_number %></td>
+        <td><%= asset.manufacturer %></td>
+        <td><%= asset.amount %></td>
+        <td><%= asset.check_in_date %></td>
+        <td><%= asset.check_out_date %></td>
+        <td><%= Phoenix.HTML.raw(
+                "<img src=data:image/png;base64," <> Base.encode64(asset.qr_img) <> " alt=\"Red Dot\"/>"
+              ) %></td>
+        <td>
+          <span><%= live_redirect "Show", to: Routes.asset_show_path(@socket, :show, asset) %></span>
+          <span><%= live_patch "Edit", to: Routes.asset_index_path(@socket, :edit, asset) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: asset.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <button>Check In</button>
 <button>Check Out</button>

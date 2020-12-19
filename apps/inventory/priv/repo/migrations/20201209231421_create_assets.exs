@@ -13,6 +13,8 @@ defmodule Inventory.Repo.Migrations.CreateAssets do
       add :check_in_date, :utc_datetime
       add :check_out_date, :utc_datetime
 
+      add :users_id, references(:users)
+
       timestamps()
     end
   end

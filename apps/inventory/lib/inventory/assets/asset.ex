@@ -25,6 +25,8 @@ defmodule Inventory.Assets.Asset do
     field :check_in_date, :utc_datetime
     field :check_out_date, :utc_datetime
 
+    belongs_to(:users, Inventory.Accounts.User)
+
     timestamps()
   end
 
@@ -32,6 +34,7 @@ defmodule Inventory.Assets.Asset do
   def changeset(%__MODULE__{} = asset, %{} = attrs \\ %{}) do
     asset
     |> cast(attrs, @fields)
+    |> cast_assoc(:users)
     |> validate_required([:name, :description])
   end
 end

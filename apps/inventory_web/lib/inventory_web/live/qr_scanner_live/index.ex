@@ -5,7 +5,10 @@ defmodule InventoryWeb.QrScannerLive.Index do
   def mount(_params, _session, socket) do
     if connected?(socket), do: Inventory.Assets.subscribe()
 
-    {:ok, socket |> assign(:qr_code_message, "")}
+    {:ok,
+     socket
+     |> assign(:qr_code_message, "")
+     |> assign(:assets, [])}
   end
 
   @impl true
@@ -20,8 +23,7 @@ defmodule InventoryWeb.QrScannerLive.Index do
 
   @impl true
   def handle_info({:asset_retrieved, asset}, socket) do
-    IO.inspect(asset)
-    {:noreply, socket |> assign(:asset, asset)}
+    {:noreply, socket |> assign(:assets, [asset | socket.assigns.assets])}
   end
 
   def handle_info(_, socket) do
