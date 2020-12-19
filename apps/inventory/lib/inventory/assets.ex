@@ -16,6 +16,13 @@ defmodule Inventory.Assets do
     |> Asset.changeset()
   end
 
+  def fetch_asset_by_name(name) do
+    case Inventory.Repo.get_by(Inventory.Assets.Asset, name: name) do
+      nil -> {:error, "Not found"}
+      asset -> asset
+    end
+  end
+
   @doc """
   Returns the list of assets.
 

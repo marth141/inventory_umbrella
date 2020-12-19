@@ -40,6 +40,7 @@ defmodule Inventory.Assets.Asset do
 end
 
 # Adds a user to an asset
+# asset = Inventory.Repo.get_by(Inventory.Assets.Asset, name: "Test-1") |> Inventory.Repo.preload(:users)
 # asset
 # |> Ecto.Changeset.change()
 # |> Ecto.Changeset.put_assoc(:users, Inventory.Accounts.get_user!(1))

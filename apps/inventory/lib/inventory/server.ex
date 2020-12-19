@@ -20,15 +20,6 @@ defmodule Inventory.Server do
     {:noreply, %{state | last_refresh: DateTime.utc_now()}}
   end
 
-  def handle_info({:retrieve_asset, msg}, state) do
-    Messaging.publish(
-      {:asset_retrieved, Inventory.Repo.get_by(Inventory.Assets.Asset, name: msg)},
-      Inventory.Assets.topic()
-    )
-
-    {:noreply, state}
-  end
-
   def handle_info(_, state) do
     {:noreply, state}
   end

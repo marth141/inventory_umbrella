@@ -22,17 +22,12 @@ defmodule InventoryWeb.QrScannerLive.Index do
   end
 
   @impl true
-  def handle_info({:asset_retrieved, asset}, socket) do
-    {:noreply, socket |> assign(:assets, [asset | socket.assigns.assets])}
-  end
+  def handle_event("qrCodeMessage", %{"qrCodeMessage" => qr_code_message}, socket) do
+    asset = Inventory.Assets.fetch_asset_by_name(qr_code_message)
 
-  def handle_info(_, socket) do
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("qrCodeMessage", params, socket) do
-    Messaging.publish({:retrieve_asset, params["qrCodeMessage"]}, Inventory.Assets.topic())
-    {:noreply, assign(socket, :qr_code_message, "Scanned: " <> params["qrCodeMessage"])}
+    {:noreply,
+     socket
+     |> assign(:qr_code_message, "Scanned: " <> qr_code_message)
+     |> assign(:assets, [asset | socket.assigns.assets])}
   end
 end
