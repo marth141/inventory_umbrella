@@ -11,6 +11,7 @@
       <th>Amount</th>
       <th>Check In Date</th>
       <th>Check Out Date</th>
+      <th>User ID</th>
       <th>QR Image</th>
       <th></th>
     </tr>
@@ -26,6 +27,7 @@
         <td><%= asset.amount %></td>
         <td><%= asset.check_in_date %></td>
         <td><%= asset.check_out_date %></td>
+        <td><%= asset.users_id %></td>
         <td><%= Phoenix.HTML.raw(
                 "<img src=data:image/png;base64," <> Base.encode64(asset.qr_img) <> " alt=\"Red Dot\"/>"
               ) %></td>

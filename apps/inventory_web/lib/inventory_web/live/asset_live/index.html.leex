@@ -33,6 +33,7 @@
         <td><%= asset.amount %></td>
         <td><%= asset.check_in_date %></td>
         <td><%= asset.check_out_date %></td>
+        <td><%= asset.user_id %></td>
         <td><%= Phoenix.HTML.raw(
                 "<img src=data:image/png;base64," <> Base.encode64(asset.qr_img) <> " alt=\"Red Dot\"/>"
               ) %></td>

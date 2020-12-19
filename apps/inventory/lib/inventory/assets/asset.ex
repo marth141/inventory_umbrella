@@ -38,3 +38,9 @@ defmodule Inventory.Assets.Asset do
     |> validate_required([:name, :description])
   end
 end
+
+# Adds a user to an asset
+# asset
+# |> Ecto.Changeset.change()
+# |> Ecto.Changeset.put_assoc(:users, Inventory.Accounts.get_user!(1))
+# |> Inventory.Repo.update()
